@@ -1,6 +1,8 @@
 # GoBus
 
-GoBus is a Go SDK designed to interface with the Siri International system to enhance and simplify bus tracking. This application provides users with real-time updates on bus locations, helping improve the efficiency and reliability of public transportation.
+GoBus is a Go SDK designed to interface with the Siri-Standard to enhance and simplify bus tracking. This application provides users with real-time updates on bus locations, helping improve the efficiency and reliability of public transportation.
+
+The SIRI (Service Interface for Real Time Information) standard is a protocol designed to facilitate the exchange of real-time information regarding public transportation services between different information systems.
 
 ## Features
 
