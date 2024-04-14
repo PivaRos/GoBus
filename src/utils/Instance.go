@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 type Instance struct {
@@ -12,7 +13,15 @@ type Instance struct {
 
 func CreateInstance(uri string, key string) (*Instance, error) {
 	// http.NewRequest returns a pointer to a Request and an error
-	baseURL, err := url.Parse(uri + "/json")
+	var dataType string = ""
+	var isXml = strings.Contains(strings.ToLower(uri), strings.ToLower("/xml"))
+	var isJson = strings.Contains(strings.ToLower(uri), strings.ToLower("/json"))
+	if !isJson || !isXml {
+		dataType = "/json"
+	}
+
+	baseURL, err := url.Parse(uri + dataType)
+
 	if err != nil {
 		return nil, nil
 	}

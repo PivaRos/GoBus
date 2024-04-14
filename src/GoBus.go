@@ -39,6 +39,5 @@ func (bus *GoBus) MonitoringRef(id interface{}) {
 
 	}
 	url.RawQuery = params.Encode()
-	
-		
+
 }
