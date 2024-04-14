@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+
 	"github.com/pivaros/GoBus/src/structs"
 	"github.com/pivaros/GoBus/src/utils"
 )
@@ -45,14 +46,14 @@ func (bus *GoBus) MonitoringRef(id interface{}) (*structs.ResponseData, error) {
 	r, httpErr := bus.client.Do(request.Request)
 	log.Println("here0.5")
 	if httpErr != nil {
-		return nil, nil
+		return nil, httpErr
 	}
 	log.Println("here1")
 	var data structs.ResponseData
 	decoder := json.NewDecoder(r.Body)
 	parseErr := decoder.Decode(&data)
 	if parseErr != nil {
-		return nil, nil
+		return nil, parseErr
 	}
 	return &data, nil
 }
