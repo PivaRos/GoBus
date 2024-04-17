@@ -24,10 +24,11 @@ type ServiceDelivery struct {
 }
 
 type StopMonitoringDelivery struct {
-	Version            string               `json:"-" xml:"version,attr"`
-	ResponseTimestamp  time.Time            `json:"ResponseTimestamp" xml:"ResponseTimestamp"`
-	Status             string               `json:"Status" xml:"Status"`
-	MonitoredStopVisit []MonitoredStopVisit `json:"MonitoredStopVisit" xml:"MonitoredStopVisit"`
+	Version            string                `json:"-" xml:"version,attr"`
+	ResponseTimestamp  time.Time             `json:"ResponseTimestamp" xml:"ResponseTimestamp"`
+	Status             string                `json:"Status" xml:"Status"`
+	MonitoredStopVisit *[]MonitoredStopVisit `json:"MonitoredStopVisit,omitempty" xml:"MonitoredStopVisit,omitempty"`
+	ErrorCondition     *ErrorCondition       `json:"ErrorCondition,omitempty" xml:"ErrorCondition,omitempty"`
 }
 
 type MonitoredStopVisit struct {
@@ -68,4 +69,13 @@ type MonitoredCall struct {
 	Order               string    `json:"Order" xml:"Order"`
 	ExpectedArrivalTime time.Time `json:"ExpectedArrivalTime" xml:"ExpectedArrivalTime"`
 	DistanceFromStop    string    `json:"DistanceFromStop" xml:"DistanceFromStop"`
+}
+
+type ErrorCondition struct {
+	OtherError  *OtherError `json:"OtherError,omitempty" xml:"OtherError,omitempty"`
+	Description string      `json:"Description" xml:"Description"`
+}
+
+type OtherError struct {
+	ErrorText string `json:"ErrorText" xml:"ErrorText"`
 }

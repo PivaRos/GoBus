@@ -23,11 +23,12 @@ func main() {
 		log.Panicln(err)
 	}
 	log.Println("init success")
-	result, monitorErr := gobus.MonitoringRef(1)
+	lineRef := "10523"
+	result, monitorErr := gobus.MonitoringRef("1", &lineRef)
 	if monitorErr != nil {
 		log.Panicln(monitorErr)
 	}
-	for index, value := range result.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit {
+	for index, value := range *result.Siri.ServiceDelivery.StopMonitoringDelivery[0].MonitoredStopVisit {
 		jsonData, err := json.MarshalIndent(value.MonitoredVehicleJourney, "", "    ")
 		if err != nil {
 			log.Panicln(err)
