@@ -16,14 +16,13 @@ func CreateInstance(uri string, key string) (*Instance, error) {
 	var dataType string = ""
 	var isXml = strings.Contains(strings.ToLower(uri), strings.ToLower("/xml"))
 	var isJson = strings.Contains(strings.ToLower(uri), strings.ToLower("/json"))
-	if !isJson || !isXml {
+	if !isJson && !isXml {
 		dataType = "/json"
 	}
 
 	baseURL, err := url.Parse(uri + dataType)
-
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
 	params := baseURL.Query() // Get a copy of the query values.
 	params.Add("Key", key)    // Add your key
@@ -32,7 +31,7 @@ func CreateInstance(uri string, key string) (*Instance, error) {
 	req, err := http.NewRequest("GET", baseURL.String(), nil)
 	if err != nil {
 		log.Fatalf("Failed to create request: %v", err)
-		return nil, nil
+		return nil, err
 	}
 	return &Instance{req}, nil
 }

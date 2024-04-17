@@ -23,11 +23,12 @@ func InitGoBus(ServiceUri string, ServiceKey string, client http.Client) (*GoBus
 	if err != nil {
 		return Gobus, err
 	}
-
+	
 	Gobus = &GoBus{
 		client:   &client,
 		instance: *instance,
 	}
+	
 	return Gobus, nil
 }
 

@@ -12,8 +12,8 @@ import (
 
 func main() {
 	log.Println("starting")
-	serviceUri := "<Your SERVICE URI>"
-	Key := "<Your KEY>"
+	serviceUri := "<Your Uri>"
+	Key := "<Your Key>"
 	client := http.Client{
 		Transport: &http.Transport{},
 		Timeout:   10 * time.Second,
@@ -23,7 +23,7 @@ func main() {
 		log.Panicln(err)
 	}
 	log.Println("init success")
-	result, monitorErr := gobus.MonitoringRef(1) // function
+	result, monitorErr := gobus.MonitoringRef(1)
 	if monitorErr != nil {
 		log.Panicln(monitorErr)
 	}
