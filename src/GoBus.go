@@ -2,8 +2,9 @@ package gobus
 
 import (
 	"encoding/json"
+	"errors"
+	"log"
 	"net/http"
-	"strconv"
 
 	"github.com/pivaros/GoBus/src/structs"
 	"github.com/pivaros/GoBus/src/utils"
@@ -27,30 +28,33 @@ func InitGoBus(ServiceUri string, ServiceKey string, client http.Client) (*GoBus
 		client:   &client,
 		instance: *instance,
 	}
+
 	return Gobus, nil
 }
 
-func (bus *GoBus) MonitoringRef(id interface{}) (*structs.ResponseData, error) {
-
+func (bus *GoBus) MonitoringRef(MonitoringId string, LineId *string) (*structs.ResponseData, error) {
 	request := bus.instance
 	params := request.URL.Query()
-	switch id := id.(type) {
-	case int:
-		params.Add("MonitoringRef", strconv.Itoa(id))
-	case string:
-		params.Add("MonitoringRef", id)
+	params.Add("MonitoringRef", MonitoringId)
+
+	if LineId != nil {
+		params.Add("LineRef", *LineId)
 	}
 	request.URL.RawQuery = params.Encode()
+
 	r, httpErr := bus.client.Do(request.Request)
 	if httpErr != nil {
-		return nil, nil
+		return nil, httpErr
 	}
-
 	var data structs.ResponseData
-	decoder := json.NewDecoder(r.Body)
-	parseErr := decoder.Decode(&data)
-	if parseErr != nil {
-		return nil, nil
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		log.Println("this is error")
+		return nil, err
+	}
+	log.Println(data.Siri.ServiceDelivery.Status)
+	if data.Siri.ServiceDelivery.StopMonitoringDelivery[0].Status == "false" {
+		return nil, errors.New(data.Siri.ServiceDelivery.StopMonitoringDelivery[0].ErrorCondition.Description)
 	}
 	return &data, nil
 }
