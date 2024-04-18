@@ -20,7 +20,8 @@ type ServiceDelivery struct {
 	ResponseMessageIdentifier string                   `json:"ResponseMessageIdentifier"`
 	RequestMessageRef         string                   `json:"RequestMessageRef"`
 	Status                    string                   `json:"Status"`
-	StopMonitoringDelivery    []StopMonitoringDelivery `json:"StopMonitoringDelivery"`
+	StopMonitoringDelivery    []StopMonitoringDelivery `json:"StopMonitoringDelivery,omitempty"`
+	ErrorCondition            *ErrorCondition          `json:"ErrorCondition,omitempty"`
 }
 
 type StopMonitoringDelivery struct {
