@@ -3,7 +3,6 @@ package gobus
 import (
 	"encoding/json"
 	"errors"
-	"log"
 	"net/http"
 
 	"github.com/pivaros/GoBus/src/structs"
@@ -51,7 +50,9 @@ func (bus *GoBus) MonitoringRef(MonitoringId string, LineId *string) (*structs.R
 	if err != nil {
 		return nil, err
 	}
-	log.Println(data.Siri.ServiceDelivery.Status)
+	if data.Siri.ServiceDelivery.Status == "false" {
+		return nil, errors.New(data.Siri.ServiceDelivery.ErrorCondition.Description)
+	}
 	if data.Siri.ServiceDelivery.StopMonitoringDelivery[0].Status == "false" {
 		return nil, errors.New(data.Siri.ServiceDelivery.StopMonitoringDelivery[0].ErrorCondition.Description)
 	}
