@@ -49,7 +49,6 @@ func (bus *GoBus) MonitoringRef(MonitoringId string, LineId *string) (*structs.R
 	var data structs.ResponseData
 	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
-		log.Println("this is error")
 		return nil, err
 	}
 	log.Println(data.Siri.ServiceDelivery.Status)
