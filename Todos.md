@@ -7,6 +7,7 @@
 - [-] Add Support for xml
 - [-] Add check when init for bad credentials
 - [-] Add Api error wrapper
+- [-] Implement Redis
 
 ## Improvements
 
