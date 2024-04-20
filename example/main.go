@@ -13,8 +13,6 @@ import (
 
 func main() {
 	log.Println("starting")
-	serviceUri := "<Your Uri>"
-	Key := "<Your Key>"
 	client := http.Client{
 		Transport: &http.Transport{},
 		Timeout:   10 * time.Second,
@@ -25,12 +23,11 @@ func main() {
 		DB:       0,
 	}
 	options := gobus.GoBusOptions{
-		ServiceUri:  serviceUri,
-		ServiceKey:  Key,
 		Client:      client,
 		Rdb_Options: rdb_Options,
 		StaleTime:   50 * time.Second,
 	}
+
 	gobus, err := gobus.InitGoBus(options)
 	if err != nil {
 		log.Panicln(err)

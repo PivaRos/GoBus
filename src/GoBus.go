@@ -5,9 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/joho/godotenv"
 	"github.com/pivaros/GoBus/src/structs"
 	"github.com/pivaros/GoBus/src/utils"
 )
@@ -22,16 +24,23 @@ type GoBus struct {
 }
 
 type GoBusOptions struct {
-	ServiceUri  string
-	ServiceKey  string
 	Client      http.Client
 	Rdb_Options redis.Options
 	StaleTime   time.Duration
 }
 
 func InitGoBus(options GoBusOptions) (*GoBus, error) {
+	godotenv.Load()
+	serviceUri := os.Getenv("SIRI_SERVICE_URI")
+	serviceKey := os.Getenv("SIRI_SERVICE_KEY")
+	if serviceUri == "" {
+		return nil, errors.New("SIRI_SERVICE_URI was not found in .env file")
+	}
+	if serviceKey == "" {
+		return nil, errors.New("SIRI_SERVICE_KEY was not found in .env file")
+	}
 
-	instance, err := utils.CreateInstance(options.ServiceUri, options.ServiceKey)
+	instance, err := utils.CreateInstance(serviceUri, serviceKey)
 	if err != nil {
 		return nil, err
 	}

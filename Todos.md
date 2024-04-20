@@ -11,6 +11,7 @@
 
 ## Improvements
 
+- [-] Move client vars to env
 - [ ] Update the README file with the latest setup instructions.
 - [-] Fix Xml bug
 - [-] Allow the uri to end both with '/' and ''
