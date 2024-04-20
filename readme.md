@@ -64,19 +64,18 @@ import (
 )
 
 func main() {
-    client := http.Client{
-        Transport: &http.Transport{},
-        Timeout: 10 * time.Second,  // Customize the timeout as needed
-    }
-    rdbOptions := redis.Options{
-        Addr:     "localhost:6379",  // Redis server address
-        Password: "",                // Redis password if set
-        DB:       0,                 // Redis database number
-    }
+
     options := gobus.GoBusOptions{
-        Client:      client,
-        Rdb_Options: rdbOptions,
-        StaleTime:   50 * time.Second,  // Duration after which the data is considered stale
+        Client:      http.Client{
+        Transport: &http.Transport{},
+        Timeout: <Your Timeout>,   // Customize the timeout as needed
+        },
+        Rdb_Options: redis.Options{
+        Addr:     <Your Address>,  // Redis server address
+        Password: <Your Password>, // Redis password if set
+        DB:       <Your DB>,       // Redis database number
+        },
+        StaleTime:<Your Duration>, // Duration after which the data is considered stale
     }
 
     gobus, err := gobus.InitGoBus(options)
